@@ -60,12 +60,12 @@ function ItemRow({ item, depth, isLast, formatNumber, onEdit, compareMode = 'avg
       {/* 진행 바 */}
       <div className="h-1.5 bg-alloc-muted/20 rounded-full overflow-hidden mb-2">
         <div
-          className={`h-full transition-all duration-300 ${progress > 100 ? 'bg-alloc-over' : progress > 80 ? 'bg-alloc-over/70' : 'bg-alloc-safe'}`}
+          className="h-full transition-all duration-300 bg-alloc-tertiary"
           style={{ width: `${Math.min(progress, 100)}%` }}
         />
       </div>
 
-      {/* 금액 정보 - 지출 | 확정 | 잔금 */}
+      {/* 금액 정보 - 지출 | 잔금 */}
       <div className="flex items-center justify-between text-sm">
         {/* 지출 */}
         <div className="text-alloc-muted">
@@ -73,19 +73,11 @@ function ItemRow({ item, depth, isLast, formatNumber, onEdit, compareMode = 'avg
           <span className="number-highlight ml-1 text-alloc-text font-medium">{formatNumber(item.paid_amount)}</span>
         </div>
 
-        {/* 확정 */}
-        <div className="text-alloc-muted">
-          <span className="text-xs">확정</span>
-          <span className="number-highlight ml-1 text-alloc-accent font-semibold">
-            {isConfirmed ? formatNumber(confirmed) : '-'}
-          </span>
-        </div>
-
         {/* 잔금 */}
         <div className="text-alloc-muted">
           <span className="text-xs">잔금</span>
-          <span className="number-highlight ml-1 text-alloc-text font-medium">
-            {isConfirmed ? formatNumber(balance) : '-'}
+          <span className="number-highlight ml-1 text-alloc-secondary font-medium">
+            {isConfirmed ? formatNumber(balance) : formatNumber(delta)}
           </span>
         </div>
       </div>
