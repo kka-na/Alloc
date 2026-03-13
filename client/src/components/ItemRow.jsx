@@ -65,31 +65,27 @@ function ItemRow({ item, depth, isLast, formatNumber, onEdit, compareMode = 'avg
         />
       </div>
 
-      {/* 금액 정보 */}
+      {/* 금액 정보 - 지출 | 확정 | 잔금 */}
       <div className="flex items-center justify-between text-sm">
-        {isConfirmed ? (
-          <div className="text-alloc-muted">
-            <span className="text-xs">확정</span>
-            <span className="number-highlight ml-1 text-alloc-text font-medium">{formatNumber(confirmed)}</span>
-            {isPerPerson && (
-              <span className="text-[10px] ml-1">({formatNumber(item.confirmed_amount)}×{personCount})</span>
-            )}
-          </div>
-        ) : (
-          <div className="text-alloc-muted">
-            <span className="number-highlight">{formatNumber(totalMin)}</span>
-            <span className="mx-1">~</span>
-            <span className="number-highlight">{formatNumber(totalMax)}</span>
-            {isPerPerson && (
-              <span className="text-[10px] ml-1">({formatNumber(item.min_amount)}×{personCount})</span>
-            )}
-          </div>
-        )}
+        {/* 지출 */}
+        <div className="text-alloc-muted">
+          <span className="text-xs">지출</span>
+          <span className="number-highlight ml-1 text-alloc-text font-medium">{formatNumber(item.paid_amount)}</span>
+        </div>
 
-        <div className="flex items-center gap-1">
-          <span className="text-xs text-alloc-muted">지출</span>
-          <span className="text-alloc-accent font-semibold number-highlight">
-            {formatNumber(item.paid_amount)}
+        {/* 확정 */}
+        <div className="text-alloc-muted">
+          <span className="text-xs">확정</span>
+          <span className="number-highlight ml-1 text-alloc-accent font-semibold">
+            {isConfirmed ? formatNumber(confirmed) : '-'}
+          </span>
+        </div>
+
+        {/* 잔금 */}
+        <div className="text-alloc-muted">
+          <span className="text-xs">잔금</span>
+          <span className="number-highlight ml-1 text-alloc-text font-medium">
+            {isConfirmed ? formatNumber(balance) : '-'}
           </span>
         </div>
       </div>
