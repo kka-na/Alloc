@@ -68,11 +68,12 @@ function SummaryBar({ summary, currency = 'KRW', compareMode = 'avg' }) {
         </div>
 
         {/* 확정 금액 진행 바 */}
-        <div className="mb-1">
-          <div className="flex items-center justify-end text-xs text-alloc-muted mb-1">
+        <div className="mb-2">
+          <div className="flex items-center justify-between text-[10px] text-alloc-muted mb-0.5">
+            <span>확정 {formatNumber(totalConfirmed)}</span>
             <span>{confirmedProgress.toFixed(1)}%</span>
           </div>
-          <div className="h-3 bg-alloc-border rounded-full overflow-hidden">
+          <div className="h-2 bg-alloc-border rounded-full overflow-hidden">
             <div
               className="h-full rounded-full transition-all duration-500 ease-out"
               style={{
@@ -83,13 +84,13 @@ function SummaryBar({ summary, currency = 'KRW', compareMode = 'avg' }) {
           </div>
         </div>
 
-        {/* 지출 진행 바 (더 작게) */}
-        <div className="mt-2">
+        {/* 지출 진행 바 */}
+        <div>
           <div className="flex items-center justify-between text-[10px] text-alloc-muted mb-0.5">
             <span>지출 {formatNumber(totalPaid)}</span>
             <span>{paidProgress.toFixed(1)}%</span>
           </div>
-          <div className="h-1.5 bg-alloc-border rounded-full overflow-hidden">
+          <div className="h-2 bg-alloc-border rounded-full overflow-hidden">
             <div
               className="h-full rounded-full transition-all duration-500 ease-out"
               style={{

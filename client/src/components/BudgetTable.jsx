@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect, createContext, useContext } from 'react'
 import {
   DndContext,
   closestCenter,
@@ -19,7 +19,100 @@ import ItemRow from './ItemRow'
 import EditItemModal from './EditItemModal'
 import EditCategoryModal from './EditCategoryModal'
 
-function SortableCategory({ category, depth, isExpanded, hasChildren, onToggle, onEdit, formatNumber, compareMode, children }) {
+// Context to close all swipes when touching elsewhere
+const SwipeContext = createContext({ closeAll: () => {}, register: () => {} })
+
+function SwipeableWrapper({ children, onAdd, addLabel = '+추가' }) {
+  const [offset, setOffset] = useState(0)
+  const startX = useRef(0)
+  const startY = useRef(0)
+  const isHorizontal = useRef(null)
+  const { closeAll, register } = useContext(SwipeContext)
+
+  const BUTTON_WIDTH = 80
+
+  // Register this swipe's close function
+  useEffect(() => {
+    const close = () => setOffset(0)
+    register(close)
+  }, [register])
+
+  const handleTouchStart = (e) => {
+    // Close other swipes when starting a new one
+    closeAll()
+    startX.current = e.touches[0].clientX
+    startY.current = e.touches[0].clientY
+    isHorizontal.current = null
+  }
+
+  const handleTouchMove = (e) => {
+    const diffX = startX.current - e.touches[0].clientX
+    const diffY = Math.abs(e.touches[0].clientY - startY.current)
+
+    // Determine direction on first significant move
+    if (isHorizontal.current === null && (Math.abs(diffX) > 10 || diffY > 10)) {
+      isHorizontal.current = Math.abs(diffX) > diffY
+    }
+
+    // Only handle horizontal swipes
+    if (isHorizontal.current) {
+      e.preventDefault()
+      const newOffset = Math.max(0, Math.min(BUTTON_WIDTH, diffX))
+      setOffset(newOffset)
+    }
+  }
+
+  const handleTouchEnd = () => {
+    if (offset > BUTTON_WIDTH / 2) {
+      setOffset(BUTTON_WIDTH)
+    } else {
+      setOffset(0)
+    }
+    isHorizontal.current = null
+  }
+
+  const handleAdd = (e) => {
+    e.stopPropagation()
+    setOffset(0)
+    onAdd()
+  }
+
+  const closeSwipe = () => {
+    if (offset > 0) {
+      setOffset(0)
+    }
+  }
+
+  return (
+    <div className="relative overflow-hidden">
+      {/* Add button (revealed on swipe) */}
+      <div
+        className="absolute right-0 top-0 bottom-0 flex items-center justify-center bg-alloc-accent text-white text-sm font-medium"
+        style={{ width: BUTTON_WIDTH }}
+        onClick={handleAdd}
+      >
+        {addLabel}
+      </div>
+
+      {/* Content */}
+      <div
+        className="relative bg-alloc-white"
+        style={{
+          transform: `translateX(-${offset}px)`,
+          transition: offset === 0 || offset === BUTTON_WIDTH ? 'transform 0.2s ease-out' : 'none'
+        }}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onClick={offset > 0 ? closeSwipe : undefined}
+      >
+        {children}
+      </div>
+    </div>
+  )
+}
+
+function SortableCategory({ category, depth, isExpanded, hasChildren, onToggle, onEdit, formatNumber, compareMode, onAdd, children }) {
   const {
     attributes,
     listeners,
@@ -38,24 +131,26 @@ function SortableCategory({ category, depth, isExpanded, hasChildren, onToggle, 
 
   return (
     <div ref={setNodeRef} style={style} className={depth === 0 ? 'mb-4 rounded-xl shadow-md overflow-hidden' : ''}>
-      <div {...attributes} {...listeners}>
-        <CategoryRow
-          category={category}
-          depth={depth}
-          isExpanded={isExpanded}
-          hasChildren={hasChildren}
-          onToggle={onToggle}
-          onEdit={onEdit}
-          formatNumber={formatNumber}
-          compareMode={compareMode}
-        />
-      </div>
+      <SwipeableWrapper onAdd={onAdd} addLabel={depth === 0 ? '+서브' : '+항목'}>
+        <div {...attributes} {...listeners}>
+          <CategoryRow
+            category={category}
+            depth={depth}
+            isExpanded={isExpanded}
+            hasChildren={hasChildren}
+            onToggle={onToggle}
+            onEdit={onEdit}
+            formatNumber={formatNumber}
+            compareMode={compareMode}
+          />
+        </div>
+      </SwipeableWrapper>
       {children}
     </div>
   )
 }
 
-function SortableItem({ item, depth, isLast, formatNumber, onEdit, compareMode }) {
+function SortableItem({ item, depth, isLast, formatNumber, onEdit, compareMode, onAdd }) {
   const {
     attributes,
     listeners,
@@ -73,15 +168,19 @@ function SortableItem({ item, depth, isLast, formatNumber, onEdit, compareMode }
   }
 
   return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <ItemRow
-        item={item}
-        depth={depth}
-        isLast={isLast}
-        formatNumber={formatNumber}
-        onEdit={onEdit}
-        compareMode={compareMode}
-      />
+    <div ref={setNodeRef} style={style}>
+      <SwipeableWrapper onAdd={onAdd} addLabel="+항목">
+        <div {...attributes} {...listeners}>
+          <ItemRow
+            item={item}
+            depth={depth}
+            isLast={isLast}
+            formatNumber={formatNumber}
+            onEdit={onEdit}
+            compareMode={compareMode}
+          />
+        </div>
+      </SwipeableWrapper>
     </div>
   )
 }
@@ -90,17 +189,28 @@ function BudgetTable({ categories, currency, onRefresh, onAddItem, onAddSubcateg
   const [expandedCategories, setExpandedCategories] = useState(new Set())
   const [editingItem, setEditingItem] = useState(null)
   const [editingCategory, setEditingCategory] = useState(null)
+  const swipeCloseFunctions = useRef(new Set())
+
+  const swipeContextValue = {
+    closeAll: () => {
+      swipeCloseFunctions.current.forEach(fn => fn())
+    },
+    register: (closeFn) => {
+      swipeCloseFunctions.current.add(closeFn)
+      return () => swipeCloseFunctions.current.delete(closeFn)
+    }
+  }
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
-        delay: 200,
+        delay: 300,
         tolerance: 5,
       },
     }),
     useSensor(TouchSensor, {
       activationConstraint: {
-        delay: 200,
+        delay: 300,
         tolerance: 5,
       },
     })
@@ -124,11 +234,9 @@ function BudgetTable({ categories, currency, onRefresh, onAddItem, onAddSubcateg
     const { active, over } = event
     if (!over || active.id === over.id) return
 
-    // Determine what type of item was dragged
     const activeId = active.id
     const overId = over.id
 
-    // Find which list contains these items
     // Check top-level categories
     const categoryIds = categories.map(c => c.id)
     if (categoryIds.includes(activeId) && categoryIds.includes(overId)) {
@@ -145,7 +253,7 @@ function BudgetTable({ categories, currency, onRefresh, onAddItem, onAddSubcateg
       return
     }
 
-    // Check items within categories
+    // Check items and subcategories within categories
     for (const cat of categories) {
       const itemIds = cat.items?.map(i => i.id) || []
       if (itemIds.includes(activeId) && itemIds.includes(overId)) {
@@ -162,7 +270,6 @@ function BudgetTable({ categories, currency, onRefresh, onAddItem, onAddSubcateg
         return
       }
 
-      // Check subcategories
       const subIds = cat.children?.map(c => c.id) || []
       if (subIds.includes(activeId) && subIds.includes(overId)) {
         const oldIndex = subIds.indexOf(activeId)
@@ -178,7 +285,6 @@ function BudgetTable({ categories, currency, onRefresh, onAddItem, onAddSubcateg
         return
       }
 
-      // Check items in subcategories
       for (const sub of cat.children || []) {
         const subItemIds = sub.items?.map(i => i.id) || []
         if (subItemIds.includes(activeId) && subItemIds.includes(overId)) {
@@ -198,7 +304,7 @@ function BudgetTable({ categories, currency, onRefresh, onAddItem, onAddSubcateg
     }
   }
 
-  const renderItems = (items, depth, hasMoreChildren) => {
+  const renderItems = (items, depth, categoryId, hasMoreChildren) => {
     if (!items || items.length === 0) return null
     const itemIds = items.map(i => i.id)
 
@@ -213,13 +319,14 @@ function BudgetTable({ categories, currency, onRefresh, onAddItem, onAddSubcateg
             formatNumber={formatNumber}
             onEdit={(item) => setEditingItem(item)}
             compareMode={compareMode}
+            onAdd={() => onAddItem(categoryId)}
           />
         ))}
       </SortableContext>
     )
   }
 
-  const renderSubcategories = (children, depth) => {
+  const renderSubcategories = (children, depth, parentId) => {
     if (!children || children.length === 0) return null
     const childIds = children.map(c => c.id)
 
@@ -240,11 +347,12 @@ function BudgetTable({ categories, currency, onRefresh, onAddItem, onAddSubcateg
               onEdit={(cat) => setEditingCategory(cat)}
               formatNumber={formatNumber}
               compareMode={compareMode}
+              onAdd={() => onAddItem(child.id)}
             >
               {isExpanded && (
                 <div>
-                  {renderItems(child.items, depth, child.children?.length > 0)}
-                  {renderSubcategories(child.children, depth + 1)}
+                  {renderItems(child.items, depth, child.id, child.children?.length > 0)}
+                  {renderSubcategories(child.children, depth + 1, child.id)}
                 </div>
               )}
             </SortableCategory>
@@ -267,13 +375,14 @@ function BudgetTable({ categories, currency, onRefresh, onAddItem, onAddSubcateg
   const categoryIds = categories.map(c => c.id)
 
   return (
-    <div className="px-4">
-      <DndContext
-        sensors={sensors}
-        collisionDetection={closestCenter}
-        onDragEnd={handleDragEnd}
-      >
-        <SortableContext items={categoryIds} strategy={verticalListSortingStrategy}>
+    <SwipeContext.Provider value={swipeContextValue}>
+      <div className="px-4" onClick={() => swipeContextValue.closeAll()}>
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+        >
+          <SortableContext items={categoryIds} strategy={verticalListSortingStrategy}>
           {categories.map(category => {
             const isExpanded = expandedCategories.has(category.id)
             const hasChildren = category.children?.length > 0 || category.items?.length > 0
@@ -289,11 +398,12 @@ function BudgetTable({ categories, currency, onRefresh, onAddItem, onAddSubcateg
                 onEdit={(cat) => setEditingCategory(cat)}
                 formatNumber={formatNumber}
                 compareMode={compareMode}
+                onAdd={() => onAddSubcategory(category.id)}
               >
                 {isExpanded && (
                   <div className="bg-alloc-white">
-                    {renderItems(category.items, 0, category.children?.length > 0)}
-                    {renderSubcategories(category.children, 1)}
+                    {renderItems(category.items, 0, category.id, category.children?.length > 0)}
+                    {renderSubcategories(category.children, 1, category.id)}
                   </div>
                 )}
               </SortableCategory>
@@ -343,7 +453,8 @@ function BudgetTable({ categories, currency, onRefresh, onAddItem, onAddSubcateg
           }}
         />
       )}
-    </div>
+      </div>
+    </SwipeContext.Provider>
   )
 }
 

@@ -1,13 +1,13 @@
 function ItemRow({ item, depth, isLast, formatNumber, onEdit, compareMode = 'avg' }) {
-  const confirmed = item.confirmed_amount || 0
-  const isConfirmed = confirmed > 0
   const isPerPerson = item.is_per_person
   const personCount = item.person_count || 1
   const multiplier = isPerPerson ? personCount : 1
 
-  // 인원별 항목은 이미 avg_amount에 곱셈이 적용됨
+  // 인원별 항목은 이미 API에서 곱셈이 적용됨
   const totalMin = item.total_min || item.min_amount * multiplier
   const totalMax = item.total_max || item.max_amount * multiplier
+  const confirmed = item.total_confirmed || (item.confirmed_amount || 0) * multiplier
+  const isConfirmed = confirmed > 0
 
   const getCompareValue = () => {
     // 확정 금액이 있으면 그걸 기준으로, 없으면 compareMode에 따라
@@ -70,6 +70,9 @@ function ItemRow({ item, depth, isLast, formatNumber, onEdit, compareMode = 'avg
           <div className="text-alloc-muted">
             <span className="text-xs">확정</span>
             <span className="number-highlight ml-1 text-alloc-text font-medium">{formatNumber(confirmed)}</span>
+            {isPerPerson && (
+              <span className="text-[10px] ml-1">({formatNumber(item.confirmed_amount)}×{personCount})</span>
+            )}
           </div>
         ) : (
           <div className="text-alloc-muted">
