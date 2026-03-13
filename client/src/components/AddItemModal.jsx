@@ -50,11 +50,11 @@ function AddItemModal({ categoryId, onClose, onSuccess }) {
     <div className="fixed inset-0 z-50 flex items-end justify-center" onClick={onClose}>
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
       <div
-        className="relative w-full bg-alloc-bg rounded-t-3xl bottom-sheet max-h-[85vh] overflow-y-auto"
+        className="relative w-full bg-alloc-white rounded-t-3xl bottom-sheet max-h-[85vh] overflow-y-auto"
         style={{ paddingBottom: 'max(24px, env(safe-area-inset-bottom))' }}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex justify-center pt-3 pb-2 sticky top-0 bg-alloc-bg">
+        <div className="flex justify-center pt-3 pb-2 sticky top-0 bg-alloc-white">
           <div className="w-10 h-1 bg-alloc-muted/30 rounded-full" />
         </div>
 
@@ -69,7 +69,7 @@ function AddItemModal({ categoryId, onClose, onSuccess }) {
                 value={form.name}
                 onChange={(e) => handleChange('name', e.target.value)}
                 placeholder="예: 본식 드레스"
-                className="w-full bg-white border border-alloc-muted/20 rounded-xl px-4 py-3 text-alloc-text focus:outline-none focus:border-alloc-accent"
+                className="w-full bg-transparent border-b-2 border-alloc-tertiary px-1 py-2 text-alloc-text focus:outline-none"
                 autoFocus
               />
             </div>
@@ -81,7 +81,7 @@ function AddItemModal({ categoryId, onClose, onSuccess }) {
                   type="checkbox"
                   checked={form.is_per_person}
                   onChange={(e) => handleChange('is_per_person', e.target.checked)}
-                  className="w-5 h-5 rounded border-alloc-muted/20 text-alloc-accent focus:ring-alloc-accent"
+                  className="w-5 h-5 rounded border-alloc-muted/20 text-alloc-tertiary focus:ring-alloc-tertiary"
                 />
                 <span className="text-sm text-alloc-text">인원별</span>
               </label>
@@ -92,7 +92,7 @@ function AddItemModal({ categoryId, onClose, onSuccess }) {
                     value={form.person_count}
                     onChange={(e) => handleChange('person_count', e.target.value)}
                     min="1"
-                    className="w-20 bg-white border border-alloc-muted/20 rounded-xl px-3 py-2 text-alloc-text text-center focus:outline-none focus:border-alloc-accent"
+                    className="w-20 bg-transparent border-b-2 border-alloc-tertiary px-1 py-2 text-alloc-text text-center focus:outline-none"
                   />
                   <span className="text-sm text-alloc-muted">명</span>
                 </div>
@@ -109,7 +109,7 @@ function AddItemModal({ categoryId, onClose, onSuccess }) {
                   value={form.min_amount}
                   onChange={(e) => handleChange('min_amount', e.target.value)}
                   placeholder="0"
-                  className="w-full bg-white border border-alloc-muted/20 rounded-xl px-4 py-3 text-alloc-text focus:outline-none focus:border-alloc-accent"
+                  className="w-full bg-transparent border-b-2 border-alloc-tertiary px-1 py-2 text-alloc-text focus:outline-none"
                 />
               </div>
               <div>
@@ -121,7 +121,7 @@ function AddItemModal({ categoryId, onClose, onSuccess }) {
                   value={form.max_amount}
                   onChange={(e) => handleChange('max_amount', e.target.value)}
                   placeholder="0"
-                  className="w-full bg-white border border-alloc-muted/20 rounded-xl px-4 py-3 text-alloc-text focus:outline-none focus:border-alloc-accent"
+                  className="w-full bg-transparent border-b-2 border-alloc-tertiary px-1 py-2 text-alloc-text focus:outline-none"
                 />
               </div>
             </div>
@@ -134,7 +134,7 @@ function AddItemModal({ categoryId, onClose, onSuccess }) {
                   value={form.confirmed_amount}
                   onChange={(e) => handleChange('confirmed_amount', e.target.value)}
                   placeholder="미정"
-                  className="w-full bg-white border border-alloc-muted/20 rounded-xl px-4 py-3 text-alloc-text focus:outline-none focus:border-alloc-accent"
+                  className="w-full bg-transparent border-b-2 border-alloc-tertiary px-1 py-2 text-alloc-text focus:outline-none"
                 />
               </div>
               <div>
@@ -144,7 +144,7 @@ function AddItemModal({ categoryId, onClose, onSuccess }) {
                   value={form.paid_amount}
                   onChange={(e) => handleChange('paid_amount', e.target.value)}
                   placeholder="0"
-                  className="w-full bg-white border border-alloc-muted/20 rounded-xl px-4 py-3 text-alloc-text focus:outline-none focus:border-alloc-accent"
+                  className="w-full bg-transparent border-b-2 border-alloc-tertiary px-1 py-2 text-alloc-text focus:outline-none"
                 />
               </div>
             </div>
@@ -156,7 +156,7 @@ function AddItemModal({ categoryId, onClose, onSuccess }) {
                 onChange={(e) => handleChange('note', e.target.value)}
                 placeholder="추가 정보 입력"
                 rows={2}
-                className="w-full bg-white border border-alloc-muted/20 rounded-xl px-4 py-3 text-alloc-text resize-none focus:outline-none focus:border-alloc-accent"
+                className="w-full bg-transparent border-b-2 border-alloc-muted/50 px-1 py-2 text-alloc-text resize-none focus:outline-none"
               />
             </div>
 
@@ -171,7 +171,7 @@ function AddItemModal({ categoryId, onClose, onSuccess }) {
               <button
                 type="submit"
                 disabled={loading || !form.name.trim()}
-                className="flex-1 bg-alloc-accent text-white py-4 rounded-2xl font-semibold text-lg disabled:opacity-50 touch-feedback"
+                className="flex-1 bg-alloc-tertiary text-alloc-text py-4 rounded-2xl font-semibold text-lg disabled:opacity-50 touch-feedback"
               >
                 {loading ? '저장 중...' : '추가'}
               </button>

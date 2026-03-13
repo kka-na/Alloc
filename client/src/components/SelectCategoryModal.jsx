@@ -18,7 +18,7 @@ function SelectCategoryModal({ categories, onSelect, onClose }) {
     <div className="fixed inset-0 z-50 flex items-end justify-center" onClick={onClose}>
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
       <div
-        className="relative w-full bg-alloc-bg rounded-t-3xl bottom-sheet max-h-[70vh] overflow-hidden flex flex-col"
+        className="relative w-full bg-alloc-white rounded-t-3xl bottom-sheet max-h-[70vh] overflow-hidden flex flex-col"
         style={{ paddingBottom: 'max(24px, env(safe-area-inset-bottom))' }}
         onClick={(e) => e.stopPropagation()}
       >

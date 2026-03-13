@@ -31,7 +31,7 @@ function EditBudgetModal({ budget, onClose, onSuccess }) {
     <div className="fixed inset-0 z-50 flex items-end justify-center" onClick={onClose}>
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
       <div
-        className="relative w-full bg-alloc-bg rounded-t-3xl bottom-sheet"
+        className="relative w-full bg-alloc-white rounded-t-3xl bottom-sheet"
         style={{ paddingBottom: 'max(24px, env(safe-area-inset-bottom))' }}
         onClick={(e) => e.stopPropagation()}
       >
