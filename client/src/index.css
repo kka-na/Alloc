@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-bg: #D9E1EB;
+  --color-text: #1F3D68;
+  --color-card-header: #497CB3;
+  --color-card-body: #CBE3F5;
+  --color-safe: #8EC4B3;
+  --color-over: #E5896D;
+  --color-accent: #84B4E0;
+  --color-muted: #5a7a9a;
+  --color-border: #B8C8D8;
+
+  --sat: env(safe-area-inset-top);
+  --sar: env(safe-area-inset-right);
+  --sab: env(safe-area-inset-bottom);
+  --sal: env(safe-area-inset-left);
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+html {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+  background-color: #D9E1EB;
+  color: #1F3D68;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  height: 100%;
+  overflow: hidden;
+}
+
+#root {
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.scroll-container {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.touch-feedback {
+  transition: transform 0.1s ease, background-color 0.1s ease;
+}
+.touch-feedback:active {
+  transform: scale(0.98);
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.bottom-sheet {
+  animation: slideUp 0.3s ease-out;
+}
+
+.number-highlight {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
