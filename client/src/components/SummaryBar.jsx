@@ -70,17 +70,12 @@ function SummaryBar({ summary, currency = 'KRW', compareMode = 'avg' }) {
           <div className="flex items-center justify-end text-xs text-alloc-muted mb-1">
             <span>{confirmedProgress.toFixed(1)}%</span>
           </div>
-          <div className="h-3 bg-alloc-border rounded-full overflow-hidden relative">
+          <div className="h-3 bg-alloc-border rounded-full overflow-hidden">
             <div
-              className="absolute inset-0 rounded-full"
+              className="h-full rounded-full transition-all duration-500 ease-out"
               style={{
-                background: 'linear-gradient(90deg, #5568af 0%, #ec1763 100%)'
-              }}
-            />
-            <div
-              className="absolute top-0 right-0 h-full bg-alloc-border transition-all duration-500 ease-out"
-              style={{
-                width: `${Math.max(100 - confirmedProgress, 0)}%`
+                width: `${Math.min(confirmedProgress, 100)}%`,
+                backgroundColor: '#5568af'
               }}
             />
           </div>
@@ -92,17 +87,12 @@ function SummaryBar({ summary, currency = 'KRW', compareMode = 'avg' }) {
             <span>지출 {formatNumber(totalPaid)}</span>
             <span>{paidProgress.toFixed(1)}%</span>
           </div>
-          <div className="h-1.5 bg-alloc-border rounded-full overflow-hidden relative">
+          <div className="h-1.5 bg-alloc-border rounded-full overflow-hidden">
             <div
-              className="absolute inset-0 rounded-full"
+              className="h-full rounded-full transition-all duration-500 ease-out"
               style={{
-                background: 'linear-gradient(90deg, #cdd629 0%, #f8c9dd 100%)'
-              }}
-            />
-            <div
-              className="absolute top-0 right-0 h-full bg-alloc-border transition-all duration-500 ease-out"
-              style={{
-                width: `${Math.max(100 - paidProgress, 0)}%`
+                width: `${Math.min(paidProgress, 100)}%`,
+                backgroundColor: '#ec1763'
               }}
             />
           </div>
