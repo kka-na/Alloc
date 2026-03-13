@@ -92,38 +92,34 @@ function EditItemModal({ item, onClose, onSuccess, onDelete, onAddNew }) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center" onClick={onClose}>
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
-      <div
-        className="relative w-full bg-alloc-bg rounded-t-3xl bottom-sheet max-h-[70vh] overflow-y-auto"
-        style={{
-          paddingBottom: 'max(24px, env(safe-area-inset-bottom))',
-          marginTop: 'env(safe-area-inset-top)'
-        }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="flex justify-center pt-3 pb-2 sticky top-0 bg-alloc-bg">
-          <div className="w-10 h-1 bg-alloc-muted/30 rounded-full" />
-        </div>
-
-        <div className="px-6 pb-4">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-bold text-alloc-text">항목 수정</h2>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => onAddNew(item.category_id)}
-                className="text-alloc-accent bg-alloc-accent/10 px-3 py-1.5 rounded-full text-sm font-medium"
-              >
-                + 새항목
-              </button>
-              <button
-                onClick={() => setShowDeleteConfirm(true)}
-                className="text-alloc-over bg-alloc-over/10 px-3 py-1.5 rounded-full text-sm font-medium"
-              >
-                삭제
-              </button>
-            </div>
+    <div className="fixed inset-0 z-50 bg-alloc-bg overflow-y-auto" style={{
+      paddingTop: 'env(safe-area-inset-top)',
+      paddingBottom: 'env(safe-area-inset-bottom)'
+    }}>
+      <div className="min-h-full px-4 py-6">
+        <div className="flex items-center justify-between mb-6">
+          <button
+            onClick={onClose}
+            className="text-alloc-muted text-lg"
+          >
+            취소
+          </button>
+          <h2 className="text-lg font-bold text-alloc-text">항목 수정</h2>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => onAddNew(item.category_id)}
+              className="text-alloc-accent text-sm font-medium"
+            >
+              +새항목
+            </button>
+            <button
+              onClick={() => setShowDeleteConfirm(true)}
+              className="text-alloc-over text-sm font-medium"
+            >
+              삭제
+            </button>
           </div>
+        </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
@@ -189,26 +185,16 @@ function EditItemModal({ item, onClose, onSuccess, onDelete, onAddNew }) {
               />
             </div>
 
-            <div className="flex gap-3 pt-2">
-              <button
-                type="button"
-                onClick={onClose}
-                className="flex-1 bg-alloc-border text-alloc-muted py-4 rounded-2xl font-semibold text-lg touch-feedback"
-              >
-                취소
-              </button>
-              <button
-                type="submit"
-                disabled={loading || !form.name.trim()}
-                className="flex-1 bg-alloc-accent text-white py-4 rounded-2xl font-semibold text-lg disabled:opacity-50 touch-feedback"
-              >
-                {loading ? '저장 중...' : '저장'}
-              </button>
-            </div>
+            <button
+              type="submit"
+              disabled={loading || !form.name.trim()}
+              className="w-full bg-alloc-accent text-white py-4 rounded-2xl font-semibold text-lg disabled:opacity-50 touch-feedback"
+            >
+              {loading ? '저장 중...' : '저장'}
+            </button>
           </form>
         </div>
       </div>
-    </div>
   )
 }
 
