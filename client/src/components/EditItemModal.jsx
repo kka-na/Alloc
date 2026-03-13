@@ -67,7 +67,6 @@ function EditItemModal({ item, onClose, onSuccess, onDelete, onAddNew }) {
             <div className="w-10 h-1 bg-alloc-muted/30 rounded-full" />
           </div>
           <div className="px-6 pb-4 text-center">
-            <div className="text-4xl mb-3">🗑️</div>
             <h2 className="text-xl font-bold text-alloc-text mb-2">항목 삭제</h2>
             <p className="text-alloc-muted mb-6">"{item.name}"을(를) 삭제할까요?</p>
             <div className="flex gap-3">
@@ -92,20 +91,31 @@ function EditItemModal({ item, onClose, onSuccess, onDelete, onAddNew }) {
   }
 
   return (
-    <div className="fixed inset-0 z-50 bg-alloc-bg overflow-y-auto" style={{
-      paddingTop: 'env(safe-area-inset-top)',
-      paddingBottom: 'env(safe-area-inset-bottom)'
-    }}>
-      <div className="min-h-full px-4 py-6">
-        <div className="flex items-center justify-between mb-6">
+    <div className="fixed inset-0 z-50 flex items-end justify-center" onClick={onClose}>
+      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
+      <div
+        className="relative w-full bg-alloc-bg rounded-t-3xl bottom-sheet flex flex-col"
+        style={{
+          maxHeight: '60vh',
+          paddingBottom: 'max(24px, env(safe-area-inset-bottom))'
+        }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Handle bar */}
+        <div className="flex justify-center pt-3 pb-2 flex-shrink-0">
+          <div className="w-10 h-1 bg-alloc-muted/30 rounded-full" />
+        </div>
+
+        {/* Header */}
+        <div className="flex items-center justify-between px-6 pb-3 flex-shrink-0 border-b border-alloc-border">
           <button
             onClick={onClose}
-            className="text-alloc-muted text-lg"
+            className="text-alloc-muted text-base"
           >
             취소
           </button>
           <h2 className="text-lg font-bold text-alloc-text">항목 수정</h2>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <button
               onClick={() => onAddNew(item.category_id)}
               className="text-alloc-accent text-sm font-medium"
@@ -121,6 +131,8 @@ function EditItemModal({ item, onClose, onSuccess, onDelete, onAddNew }) {
           </div>
         </div>
 
+        {/* Scrollable content */}
+        <div className="flex-1 overflow-y-auto px-6 py-4">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="text-sm text-alloc-muted mb-1 block">항목 이름</label>
@@ -195,6 +207,7 @@ function EditItemModal({ item, onClose, onSuccess, onDelete, onAddNew }) {
           </form>
         </div>
       </div>
+    </div>
   )
 }
 
