@@ -54,10 +54,15 @@ function CategoryRow({ category, depth, isExpanded, hasChildren, onToggle, onEdi
           </svg>
         )}
 
-        {/* Status Indicator - Arrow */}
+        {/* Category Name */}
+        <span className={`font-medium ${isTopLevel ? 'text-white' : 'text-alloc-text'}`}>
+          {category.name}
+        </span>
+
+        {/* Status Indicator - Arrow (follows text color) */}
         {category.summary && compareValue > 0 && (
           <svg
-            className={`w-4 h-4 ${isOver ? 'text-alloc-over' : 'text-alloc-safe'} ${isTopLevel ? 'opacity-90' : ''}`}
+            className={`w-4 h-4 ${isTopLevel ? 'text-white' : 'text-alloc-text'}`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -69,11 +74,6 @@ function CategoryRow({ category, depth, isExpanded, hasChildren, onToggle, onEdi
             )}
           </svg>
         )}
-
-        {/* Category Name */}
-        <span className={`font-medium ${isTopLevel ? 'text-white' : 'text-alloc-text'}`}>
-          {category.name}
-        </span>
       </div>
 
       <div className="flex items-center gap-3">
