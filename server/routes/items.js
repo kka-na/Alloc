@@ -63,4 +63,16 @@ router.delete('/:id', (req, res) => {
   res.status(204).end();
 });
 
+// 항목 순서 변경
+router.post('/reorder', (req, res) => {
+  const { order } = req.body; // array of item IDs in new order
+
+  const stmt = db.prepare('UPDATE items SET sort_order = ? WHERE id = ?');
+  order.forEach((id, index) => {
+    stmt.run(index, id);
+  });
+
+  res.json({ success: true });
+});
+
 export default router;

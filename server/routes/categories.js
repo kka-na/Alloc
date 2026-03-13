@@ -46,4 +46,16 @@ router.delete('/:id', (req, res) => {
   res.status(204).end();
 });
 
+// 카테고리 순서 변경
+router.post('/reorder', (req, res) => {
+  const { order } = req.body; // array of category IDs in new order
+
+  const stmt = db.prepare('UPDATE categories SET sort_order = ? WHERE id = ?');
+  order.forEach((id, index) => {
+    stmt.run(index, id);
+  });
+
+  res.json({ success: true });
+});
+
 export default router;

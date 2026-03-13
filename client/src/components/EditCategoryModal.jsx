@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-function EditCategoryModal({ category, onClose, onSuccess, onDelete, onAddSubcategory }) {
+function EditCategoryModal({ category, onClose, onSuccess, onDelete, onAddSubcategory, onAddItem }) {
   const [name, setName] = useState(category.name)
   const [loading, setLoading] = useState(false)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
@@ -90,13 +90,25 @@ function EditCategoryModal({ category, onClose, onSuccess, onDelete, onAddSubcat
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-bold text-alloc-text">카테고리 수정</h2>
             <div className="flex items-center gap-2">
-              {onAddSubcategory && (
-                <button
-                  onClick={() => onAddSubcategory(category.id)}
-                  className="text-alloc-accent bg-alloc-accent/10 px-3 py-1.5 rounded-full text-sm font-medium"
-                >
-                  +서브
-                </button>
+              {/* 서브카테고리면 +항목, 최상위 카테고리면 +서브 */}
+              {category.parent_id ? (
+                onAddItem && (
+                  <button
+                    onClick={() => onAddItem(category.id)}
+                    className="text-alloc-accent bg-alloc-accent/10 px-3 py-1.5 rounded-full text-sm font-medium"
+                  >
+                    +항목
+                  </button>
+                )
+              ) : (
+                onAddSubcategory && (
+                  <button
+                    onClick={() => onAddSubcategory(category.id)}
+                    className="text-alloc-accent bg-alloc-accent/10 px-3 py-1.5 rounded-full text-sm font-medium"
+                  >
+                    +서브
+                  </button>
+                )
               )}
               <button
                 onClick={() => setShowDeleteConfirm(true)}
