@@ -78,7 +78,7 @@ function SummaryBar({ summary, currency = 'KRW', compareMode = 'avg' }) {
               className="h-full rounded-full transition-all duration-500 ease-out"
               style={{
                 width: `${Math.min(confirmedProgress, 100)}%`,
-                backgroundColor: '#5568af'
+                backgroundColor: '#1a0089'
               }}
             />
           </div>
@@ -95,7 +95,7 @@ function SummaryBar({ summary, currency = 'KRW', compareMode = 'avg' }) {
               className="h-full rounded-full transition-all duration-500 ease-out"
               style={{
                 width: `${Math.min(paidProgress, 100)}%`,
-                backgroundColor: '#ec1763'
+                backgroundColor: '#fe5e32'
               }}
             />
           </div>
