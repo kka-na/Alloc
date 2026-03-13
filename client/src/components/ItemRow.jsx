@@ -42,9 +42,6 @@ function ItemRow({ item, depth, isLast, formatNumber, onEdit, compareMode = 'avg
           {isPerPerson && (
             <span className="text-[10px] bg-alloc-muted/20 text-alloc-muted px-1.5 py-0.5 rounded">{personCount}명</span>
           )}
-          {isConfirmed && (
-            <span className="text-[10px] bg-alloc-accent/20 text-alloc-accent px-1.5 py-0.5 rounded">확정</span>
-          )}
         </div>
         {isConfirmed ? (
           <span className={`text-sm font-semibold number-highlight ${balance > 0 ? 'text-alloc-over' : 'text-alloc-safe'}`}>
@@ -76,7 +73,7 @@ function ItemRow({ item, depth, isLast, formatNumber, onEdit, compareMode = 'avg
         {/* 잔금 */}
         <div className="text-alloc-muted">
           <span className="text-xs">잔금</span>
-          <span className="number-highlight ml-1 text-alloc-secondary font-medium">
+          <span className="number-highlight ml-1 text-alloc-text font-medium">
             {isConfirmed ? formatNumber(balance) : formatNumber(delta)}
           </span>
         </div>
