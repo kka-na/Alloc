@@ -59,20 +59,11 @@ function CategoryRow({ category, depth, isExpanded, hasChildren, onToggle, onEdi
           {category.name}
         </span>
 
-        {/* Status Indicator - Arrow (follows text color) */}
+        {/* Status Indicator - Bar/Triangle */}
         {category.summary && compareValue > 0 && (
-          <svg
-            className={`w-4 h-4 ${isTopLevel ? 'text-white' : 'text-alloc-text'}`}
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            {isOver ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 15l7-7 7 7" />
-            ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
-            )}
-          </svg>
+          <span className={`text-xs ${isTopLevel ? 'text-white' : 'text-alloc-text'}`}>
+            {isOver ? '▲' : '▬'}
+          </span>
         )}
       </div>
 

@@ -35,19 +35,10 @@ function ItemRow({ item, depth, isLast, formatNumber, onEdit, compareMode = 'avg
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2">
           <span className="text-alloc-text font-medium">{item.name}</span>
-          {/* Status Indicator - Arrow (follows text color) */}
-          <svg
-            className="w-4 h-4 flex-shrink-0 text-alloc-text"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            {isOver ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 15l7-7 7 7" />
-            ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
-            )}
-          </svg>
+          {/* Status Indicator - Bar/Triangle */}
+          <span className="text-alloc-text text-xs flex-shrink-0">
+            {isOver ? '▲' : '▬'}
+          </span>
           {isPerPerson && (
             <span className="text-[10px] bg-alloc-muted/20 text-alloc-muted px-1.5 py-0.5 rounded">{personCount}명</span>
           )}
