@@ -18,7 +18,8 @@ function CategoryRow({ category, depth, isExpanded, hasChildren, onToggle, onEdi
 
   // 지출 비교 기준 (확정 금액 있으면 확정, 없으면 예산 기준)
   const compareValue = hasConfirmed ? confirmed : budgetBase
-  const isOver = paid > compareValue
+  // 초과 여부: 지출 초과 또는 확정금액이 예산 초과
+  const isOver = paid > compareValue || (hasConfirmed && confirmed > budgetBase)
   const statusColor = isOver ? 'bg-alloc-over' : 'bg-alloc-safe'
 
   // 확정 달성률 (확정 금액 / 예산 기준)
