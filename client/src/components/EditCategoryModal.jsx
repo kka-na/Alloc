@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-function EditCategoryModal({ category, onClose, onSuccess, onDelete }) {
+function EditCategoryModal({ category, onClose, onSuccess, onDelete, onAddSubcategory }) {
   const [name, setName] = useState(category.name)
   const [loading, setLoading] = useState(false)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
@@ -89,12 +89,22 @@ function EditCategoryModal({ category, onClose, onSuccess, onDelete }) {
         <div className="px-6 pb-4">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-bold text-alloc-text">카테고리 수정</h2>
-            <button
-              onClick={() => setShowDeleteConfirm(true)}
-              className="text-alloc-over bg-alloc-over/10 px-3 py-1.5 rounded-full text-sm font-medium"
-            >
-              삭제
-            </button>
+            <div className="flex items-center gap-2">
+              {onAddSubcategory && (
+                <button
+                  onClick={() => onAddSubcategory(category.id)}
+                  className="text-alloc-accent bg-alloc-accent/10 px-3 py-1.5 rounded-full text-sm font-medium"
+                >
+                  +서브
+                </button>
+              )}
+              <button
+                onClick={() => setShowDeleteConfirm(true)}
+                className="text-alloc-over bg-alloc-over/10 px-3 py-1.5 rounded-full text-sm font-medium"
+              >
+                삭제
+              </button>
+            </div>
           </div>
 
           <form onSubmit={handleSubmit}>

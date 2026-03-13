@@ -13,6 +13,7 @@ function BudgetPage({ budgetId }) {
   const [showEditBudget, setShowEditBudget] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
   const [selectedCategoryId, setSelectedCategoryId] = useState(null)
+  const [parentCategoryId, setParentCategoryId] = useState(null)
   const [compareMode, setCompareMode] = useState(() => {
     return localStorage.getItem('alloc-compare-mode') || 'avg'
   })
@@ -43,6 +44,11 @@ function BudgetPage({ budgetId }) {
   const handleAddItem = (categoryId) => {
     setSelectedCategoryId(categoryId)
     setShowAddItem(true)
+  }
+
+  const handleAddSubcategory = (parentId) => {
+    setParentCategoryId(parentId)
+    setShowAddCategory(true)
   }
 
   if (loading) {
@@ -103,6 +109,7 @@ function BudgetPage({ budgetId }) {
           currency={budget.currency}
           onRefresh={fetchBudget}
           onAddItem={handleAddItem}
+          onAddSubcategory={handleAddSubcategory}
           compareMode={compareMode}
         />
       </div>
@@ -122,9 +129,14 @@ function BudgetPage({ budgetId }) {
       {showAddCategory && (
         <AddCategoryModal
           budgetId={budgetId}
-          onClose={() => setShowAddCategory(false)}
+          parentId={parentCategoryId}
+          onClose={() => {
+            setShowAddCategory(false)
+            setParentCategoryId(null)
+          }}
           onSuccess={() => {
             setShowAddCategory(false)
+            setParentCategoryId(null)
             fetchBudget()
           }}
         />

@@ -40,7 +40,9 @@ function AddCategoryModal({ budgetId, parentId = null, onClose, onSuccess }) {
         </div>
 
         <div className="px-6 pb-4">
-          <h2 className="text-xl font-bold text-alloc-text mb-6">카테고리 추가</h2>
+          <h2 className="text-xl font-bold text-alloc-text mb-6">
+            {parentId ? '서브카테고리 추가' : '카테고리 추가'}
+          </h2>
 
           <form onSubmit={handleSubmit}>
             <input

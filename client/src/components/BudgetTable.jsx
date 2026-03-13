@@ -4,7 +4,7 @@ import ItemRow from './ItemRow'
 import EditItemModal from './EditItemModal'
 import EditCategoryModal from './EditCategoryModal'
 
-function BudgetTable({ categories, currency, onRefresh, onAddItem, compareMode = 'avg' }) {
+function BudgetTable({ categories, currency, onRefresh, onAddItem, onAddSubcategory, compareMode = 'avg' }) {
   const [expandedCategories, setExpandedCategories] = useState(() => {
     const expanded = new Set()
     const addAll = (cats) => {
@@ -115,6 +115,10 @@ function BudgetTable({ categories, currency, onRefresh, onAddItem, compareMode =
           onDelete={() => {
             setEditingCategory(null)
             onRefresh()
+          }}
+          onAddSubcategory={(parentId) => {
+            setEditingCategory(null)
+            onAddSubcategory(parentId)
           }}
         />
       )}
