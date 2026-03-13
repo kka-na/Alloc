@@ -7,15 +7,15 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Alloc Color Palette - 7 Core Colors
+        // Alloc Color Palette - CSS Variables for dynamic theming
         'alloc': {
-          'bg': '#fff3d6',           // 배경
-          'white': '#fffcf7',        // 카드 배경
-          'text': '#2d2d2d',         // 텍스트 (차콜)
-          'accent': '#1a0089',       // 메인 (퍼플)
-          'over': '#fe5e32',         // 초과 (오렌지)
-          'safe': '#b8c352',         // 안전 (올리브)
-          'muted': '#6b6b6b',        // 보조 텍스트
+          'bg': 'var(--alloc-bg)',
+          'white': 'var(--alloc-white)',
+          'text': 'var(--alloc-text)',
+          'accent': 'var(--alloc-accent)',
+          'over': 'var(--alloc-over)',
+          'safe': 'var(--alloc-safe)',
+          'muted': 'var(--alloc-muted)',
         },
       },
     },

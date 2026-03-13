@@ -3,15 +3,14 @@
 @tailwind utilities;
 
 :root {
-  --color-bg: #D9E1EB;
-  --color-text: #1F3D68;
-  --color-card-header: #497CB3;
-  --color-card-body: #CBE3F5;
-  --color-safe: #8EC4B3;
-  --color-over: #E5896D;
-  --color-accent: #84B4E0;
-  --color-muted: #5a7a9a;
-  --color-border: #B8C8D8;
+  /* Alloc Theme Variables - default values (will be overridden by JS) */
+  --alloc-bg: #fffcf7;
+  --alloc-white: #ffffff;
+  --alloc-text: #2d2d2d;
+  --alloc-accent: #a53e14;
+  --alloc-over: #a53e14;
+  --alloc-safe: #558a86;
+  --alloc-muted: #c4c4c4;
 
   --sat: env(safe-area-inset-top);
   --sar: env(safe-area-inset-right);
@@ -31,8 +30,8 @@ html {
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
-  background-color: #D9E1EB;
-  color: #1F3D68;
+  background-color: var(--alloc-bg);
+  color: var(--alloc-text);
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: antialiased;
