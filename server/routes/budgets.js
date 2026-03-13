@@ -6,7 +6,7 @@ const router = Router();
 
 // 예산 목록 조회
 router.get('/', (req, res) => {
-  const budgets = db.prepare('SELECT * FROM budgets ORDER BY created_at DESC').all();
+  const budgets = db.prepare('SELECT * FROM budgets ORDER BY created_at ASC').all();
   res.json(budgets);
 });
 
