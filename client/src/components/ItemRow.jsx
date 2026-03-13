@@ -44,8 +44,8 @@ function ItemRow({ item, depth, isLast, formatNumber, onEdit, compareMode = 'avg
           )}
         </div>
         {isConfirmed ? (
-          <span className={`text-sm font-semibold number-highlight ${balance > 0 ? 'text-alloc-over' : 'text-alloc-safe'}`}>
-            {balance > 0 ? `잔금 ${formatNumber(balance)}` : '완납'}
+          <span className="text-sm font-semibold number-highlight text-alloc-secondary">
+            확정 {formatNumber(confirmed)}
           </span>
         ) : (
           <span className={`text-sm font-semibold number-highlight ${isOver ? 'text-alloc-over' : 'text-alloc-safe'}`}>
