@@ -68,10 +68,10 @@ const themes = [
 
 // Base colors (same for all themes)
 const baseColors = {
-  bg: '#fffcf7',        // warm white background
-  white: '#ffffff',     // card background
+  bg: '#c4c4c4',        // gray background
+  white: '#ffffff',     // card background (white)
   text: '#000000',      // black text
-  muted: '#c4c4c4',     // gray
+  muted: '#555555',     // charcoal (for readable secondary text)
 }
 
 export function applyRandomTheme() {
