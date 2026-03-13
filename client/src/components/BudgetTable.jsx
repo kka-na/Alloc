@@ -5,17 +5,7 @@ import EditItemModal from './EditItemModal'
 import EditCategoryModal from './EditCategoryModal'
 
 function BudgetTable({ categories, currency, onRefresh, onAddItem, onAddSubcategory, compareMode = 'avg' }) {
-  const [expandedCategories, setExpandedCategories] = useState(() => {
-    const expanded = new Set()
-    const addAll = (cats) => {
-      cats.forEach(c => {
-        expanded.add(c.id)
-        if (c.children) addAll(c.children)
-      })
-    }
-    addAll(categories || [])
-    return expanded
-  })
+  const [expandedCategories, setExpandedCategories] = useState(new Set())
 
   const [editingItem, setEditingItem] = useState(null)
   const [editingCategory, setEditingCategory] = useState(null)
