@@ -50,7 +50,7 @@ function EditBudgetModal({ budget, onClose, onSuccess }) {
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="예: 2025 웨딩 예산"
-                className="w-full bg-white border border-alloc-border rounded-xl px-4 py-3 text-alloc-text focus:outline-none focus:border-alloc-accent"
+                className="w-full bg-white border border-alloc-muted/20 rounded-xl px-4 py-3 text-alloc-text focus:outline-none focus:border-alloc-accent"
                 autoFocus
               />
             </div>
@@ -62,7 +62,7 @@ function EditBudgetModal({ budget, onClose, onSuccess }) {
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="예산에 대한 간단한 설명"
                 rows={2}
-                className="w-full bg-white border border-alloc-border rounded-xl px-4 py-3 text-alloc-text resize-none focus:outline-none focus:border-alloc-accent"
+                className="w-full bg-white border border-alloc-muted/20 rounded-xl px-4 py-3 text-alloc-text resize-none focus:outline-none focus:border-alloc-accent"
               />
             </div>
 
@@ -70,7 +70,7 @@ function EditBudgetModal({ budget, onClose, onSuccess }) {
               <button
                 type="button"
                 onClick={onClose}
-                className="flex-1 bg-alloc-border text-alloc-muted py-4 rounded-2xl font-semibold text-lg touch-feedback"
+                className="flex-1 bg-alloc-muted/30 text-alloc-muted py-4 rounded-2xl font-semibold text-lg touch-feedback"
               >
                 취소
               </button>

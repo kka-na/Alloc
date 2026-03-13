@@ -56,7 +56,7 @@ function App() {
     <div className="h-full flex flex-col bg-alloc-bg">
       {/* Header */}
       <header
-        className="bg-alloc-white/90 backdrop-blur-md border-b border-alloc-border flex-shrink-0"
+        className="bg-alloc-white/90 backdrop-blur-md border-b border-alloc-muted/20 flex-shrink-0"
         style={{ paddingTop: 'max(12px, env(safe-area-inset-top))' }}
       >
         <div className="px-4 pb-3 flex items-center justify-between">
@@ -130,7 +130,7 @@ function App() {
                     className={`w-full text-left rounded-xl px-4 py-3 touch-feedback border ${
                       selectedBudgetId === budget.id
                         ? 'bg-alloc-accent/10 border-alloc-accent'
-                        : 'bg-alloc-white border-alloc-border'
+                        : 'bg-alloc-white border-alloc-muted/20'
                     }`}
                   >
                     <span className={`font-medium ${selectedBudgetId === budget.id ? 'text-alloc-accent' : 'text-alloc-text'}`}>

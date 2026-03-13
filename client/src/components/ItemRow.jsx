@@ -29,7 +29,7 @@ function ItemRow({ item, depth, isLast, formatNumber, onEdit, compareMode = 'avg
 
   return (
     <div
-      className={`px-4 py-3 bg-alloc-white ${!isLast ? 'border-b border-alloc-card-body' : ''} touch-feedback cursor-pointer`}
+      className={`px-4 py-3 bg-alloc-white ${!isLast ? 'border-b border-alloc-muted/20' : ''} touch-feedback cursor-pointer`}
       onClick={() => onEdit(item)}
     >
       {/* 항목명 + 상태 표시 */}
@@ -57,7 +57,7 @@ function ItemRow({ item, depth, isLast, formatNumber, onEdit, compareMode = 'avg
       </div>
 
       {/* 진행 바 */}
-      <div className="h-1.5 bg-alloc-border rounded-full overflow-hidden mb-2">
+      <div className="h-1.5 bg-alloc-muted/20 rounded-full overflow-hidden mb-2">
         <div
           className={`h-full transition-all duration-300 ${progress > 100 ? 'bg-alloc-over' : progress > 80 ? 'bg-alloc-over/70' : 'bg-alloc-safe'}`}
           style={{ width: `${Math.min(progress, 100)}%` }}

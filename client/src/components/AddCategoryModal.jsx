@@ -50,7 +50,7 @@ function AddCategoryModal({ budgetId, parentId = null, onClose, onSuccess }) {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="카테고리 이름"
-              className="w-full bg-white border border-alloc-border rounded-2xl px-5 py-4 text-alloc-text text-lg mb-6 focus:outline-none focus:border-alloc-accent"
+              className="w-full bg-white border border-alloc-muted/20 rounded-2xl px-5 py-4 text-alloc-text text-lg mb-6 focus:outline-none focus:border-alloc-accent"
               autoFocus
             />
 
@@ -58,7 +58,7 @@ function AddCategoryModal({ budgetId, parentId = null, onClose, onSuccess }) {
               <button
                 type="button"
                 onClick={onClose}
-                className="flex-1 bg-alloc-border text-alloc-muted py-4 rounded-2xl font-semibold text-lg touch-feedback"
+                className="flex-1 bg-alloc-muted/30 text-alloc-muted py-4 rounded-2xl font-semibold text-lg touch-feedback"
               >
                 취소
               </button>

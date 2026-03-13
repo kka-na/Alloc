@@ -76,7 +76,7 @@ function EditItemModal({ item, onClose, onSuccess, onDelete, onAddNew }) {
             <div className="flex gap-3">
               <button
                 onClick={() => setShowDeleteConfirm(false)}
-                className="flex-1 bg-alloc-border text-alloc-muted py-4 rounded-2xl font-semibold text-lg touch-feedback"
+                className="flex-1 bg-alloc-muted/30 text-alloc-muted py-4 rounded-2xl font-semibold text-lg touch-feedback"
               >
                 취소
               </button>
@@ -111,7 +111,7 @@ function EditItemModal({ item, onClose, onSuccess, onDelete, onAddNew }) {
         </div>
 
         {/* Header */}
-        <div className="flex items-center justify-between px-6 pb-3 flex-shrink-0 border-b border-alloc-border">
+        <div className="flex items-center justify-between px-6 pb-3 flex-shrink-0 border-b border-alloc-muted/20">
           <button
             onClick={onClose}
             className="text-alloc-muted text-base"
@@ -144,7 +144,7 @@ function EditItemModal({ item, onClose, onSuccess, onDelete, onAddNew }) {
                 type="text"
                 value={form.name}
                 onChange={(e) => handleChange('name', e.target.value)}
-                className="w-full bg-white border border-alloc-border rounded-xl px-4 py-3 text-alloc-text focus:outline-none focus:border-alloc-accent"
+                className="w-full bg-white border border-alloc-muted/20 rounded-xl px-4 py-3 text-alloc-text focus:outline-none focus:border-alloc-accent"
               />
             </div>
 
@@ -155,7 +155,7 @@ function EditItemModal({ item, onClose, onSuccess, onDelete, onAddNew }) {
                   type="checkbox"
                   checked={form.is_per_person}
                   onChange={(e) => handleChange('is_per_person', e.target.checked)}
-                  className="w-5 h-5 rounded border-alloc-border text-alloc-accent focus:ring-alloc-accent"
+                  className="w-5 h-5 rounded border-alloc-muted/20 text-alloc-accent focus:ring-alloc-accent"
                 />
                 <span className="text-sm text-alloc-text">인원별</span>
               </label>
@@ -166,7 +166,7 @@ function EditItemModal({ item, onClose, onSuccess, onDelete, onAddNew }) {
                     value={form.person_count}
                     onChange={(e) => handleChange('person_count', e.target.value)}
                     min="1"
-                    className="w-20 bg-white border border-alloc-border rounded-xl px-3 py-2 text-alloc-text text-center focus:outline-none focus:border-alloc-accent"
+                    className="w-20 bg-white border border-alloc-muted/20 rounded-xl px-3 py-2 text-alloc-text text-center focus:outline-none focus:border-alloc-accent"
                   />
                   <span className="text-sm text-alloc-muted">명</span>
                 </div>
@@ -182,7 +182,7 @@ function EditItemModal({ item, onClose, onSuccess, onDelete, onAddNew }) {
                   type="number"
                   value={form.min_amount}
                   onChange={(e) => handleChange('min_amount', e.target.value)}
-                  className="w-full bg-white border border-alloc-border rounded-xl px-4 py-3 text-alloc-text focus:outline-none focus:border-alloc-accent"
+                  className="w-full bg-white border border-alloc-muted/20 rounded-xl px-4 py-3 text-alloc-text focus:outline-none focus:border-alloc-accent"
                 />
               </div>
               <div>
@@ -193,7 +193,7 @@ function EditItemModal({ item, onClose, onSuccess, onDelete, onAddNew }) {
                   type="number"
                   value={form.max_amount}
                   onChange={(e) => handleChange('max_amount', e.target.value)}
-                  className="w-full bg-white border border-alloc-border rounded-xl px-4 py-3 text-alloc-text focus:outline-none focus:border-alloc-accent"
+                  className="w-full bg-white border border-alloc-muted/20 rounded-xl px-4 py-3 text-alloc-text focus:outline-none focus:border-alloc-accent"
                 />
               </div>
             </div>
@@ -206,7 +206,7 @@ function EditItemModal({ item, onClose, onSuccess, onDelete, onAddNew }) {
                   value={form.confirmed_amount}
                   onChange={(e) => handleChange('confirmed_amount', e.target.value)}
                   placeholder="미정"
-                  className="w-full bg-white border border-alloc-border rounded-xl px-4 py-3 text-alloc-text focus:outline-none focus:border-alloc-accent"
+                  className="w-full bg-white border border-alloc-muted/20 rounded-xl px-4 py-3 text-alloc-text focus:outline-none focus:border-alloc-accent"
                 />
               </div>
               <div>
@@ -215,7 +215,7 @@ function EditItemModal({ item, onClose, onSuccess, onDelete, onAddNew }) {
                   type="number"
                   value={form.paid_amount}
                   onChange={(e) => handleChange('paid_amount', e.target.value)}
-                  className="w-full bg-white border border-alloc-border rounded-xl px-4 py-3 text-alloc-text focus:outline-none focus:border-alloc-accent"
+                  className="w-full bg-white border border-alloc-muted/20 rounded-xl px-4 py-3 text-alloc-text focus:outline-none focus:border-alloc-accent"
                 />
               </div>
             </div>
@@ -226,7 +226,7 @@ function EditItemModal({ item, onClose, onSuccess, onDelete, onAddNew }) {
                 value={form.note}
                 onChange={(e) => handleChange('note', e.target.value)}
                 rows={2}
-                className="w-full bg-white border border-alloc-border rounded-xl px-4 py-3 text-alloc-text resize-none focus:outline-none focus:border-alloc-accent"
+                className="w-full bg-white border border-alloc-muted/20 rounded-xl px-4 py-3 text-alloc-text resize-none focus:outline-none focus:border-alloc-accent"
               />
             </div>
 

@@ -37,7 +37,7 @@ function SelectCategoryModal({ categories, onSelect, onClose }) {
               <button
                 key={cat.id}
                 onClick={() => onSelect(cat.id)}
-                className="w-full text-left bg-white rounded-xl px-4 py-3 touch-feedback border border-alloc-border/50"
+                className="w-full text-left bg-white rounded-xl px-4 py-3 touch-feedback border border-alloc-muted/20"
               >
                 <span className="text-alloc-text font-medium">{cat.fullName}</span>
               </button>

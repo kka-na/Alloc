@@ -45,7 +45,7 @@ function SummaryBar({ summary, currency = 'KRW', compareMode = 'avg' }) {
   const remaining = compareValue - totalPaid
 
   return (
-    <div className="bg-alloc-white flex-shrink-0 border-b border-alloc-border">
+    <div className="bg-alloc-white flex-shrink-0 border-b border-alloc-muted/20">
       {/* 메인 진행 상황 */}
       <div className="px-4 pt-4 pb-3">
         <div className="flex items-center justify-between mb-3">
@@ -73,7 +73,7 @@ function SummaryBar({ summary, currency = 'KRW', compareMode = 'avg' }) {
             <span>확정 {formatNumber(totalConfirmed)}</span>
             <span>{confirmedProgress.toFixed(1)}%</span>
           </div>
-          <div className="h-2 bg-alloc-border rounded-full overflow-hidden">
+          <div className="h-2 bg-alloc-muted/20 rounded-full overflow-hidden">
             <div
               className="h-full rounded-full transition-all duration-500 ease-out"
               style={{
@@ -90,7 +90,7 @@ function SummaryBar({ summary, currency = 'KRW', compareMode = 'avg' }) {
             <span>지출 {formatNumber(totalPaid)}</span>
             <span>{paidProgress.toFixed(1)}%</span>
           </div>
-          <div className="h-2 bg-alloc-border rounded-full overflow-hidden">
+          <div className="h-2 bg-alloc-muted/20 rounded-full overflow-hidden">
             <div
               className="h-full rounded-full transition-all duration-500 ease-out"
               style={{
@@ -104,16 +104,16 @@ function SummaryBar({ summary, currency = 'KRW', compareMode = 'avg' }) {
 
       {/* 상세 정보 - 토글 */}
       {showDetails && (
-        <div className="grid grid-cols-4 border-t border-alloc-border">
-          <div className={`py-3 text-center border-r border-alloc-border ${compareMode === 'min' ? 'bg-alloc-accent/10' : ''}`}>
+        <div className="grid grid-cols-4 border-t border-alloc-muted/20">
+          <div className={`py-3 text-center border-r border-alloc-muted/20 ${compareMode === 'min' ? 'bg-alloc-accent/10' : ''}`}>
             <div className={`text-[10px] uppercase tracking-wide mb-0.5 ${compareMode === 'min' ? 'text-alloc-accent' : 'text-alloc-muted'}`}>Min</div>
             <div className={`text-sm font-semibold number-highlight ${compareMode === 'min' ? 'text-alloc-accent' : 'text-alloc-text'}`}>{formatNumber(summary.total_min)}</div>
           </div>
-          <div className={`py-3 text-center border-r border-alloc-border ${compareMode === 'avg' ? 'bg-alloc-accent/10' : ''}`}>
+          <div className={`py-3 text-center border-r border-alloc-muted/20 ${compareMode === 'avg' ? 'bg-alloc-accent/10' : ''}`}>
             <div className={`text-[10px] uppercase tracking-wide mb-0.5 ${compareMode === 'avg' ? 'text-alloc-accent' : 'text-alloc-muted'}`}>Avg</div>
             <div className={`text-sm font-semibold number-highlight ${compareMode === 'avg' ? 'text-alloc-accent' : 'text-alloc-text'}`}>{formatNumber(summary.total_avg)}</div>
           </div>
-          <div className={`py-3 text-center border-r border-alloc-border ${compareMode === 'max' ? 'bg-alloc-accent/10' : ''}`}>
+          <div className={`py-3 text-center border-r border-alloc-muted/20 ${compareMode === 'max' ? 'bg-alloc-accent/10' : ''}`}>
             <div className={`text-[10px] uppercase tracking-wide mb-0.5 ${compareMode === 'max' ? 'text-alloc-accent' : 'text-alloc-muted'}`}>Max</div>
             <div className={`text-sm font-semibold number-highlight ${compareMode === 'max' ? 'text-alloc-accent' : 'text-alloc-text'}`}>{formatNumber(summary.total_max)}</div>
           </div>

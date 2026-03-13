@@ -32,8 +32,8 @@ function CategoryRow({ category, depth, isExpanded, hasChildren, onToggle, onEdi
       className={`
         flex items-center justify-between px-4 py-3 touch-feedback
         ${isTopLevel
-          ? 'bg-alloc-card-header text-white rounded-t-xl'
-          : 'bg-alloc-card-body/50 border-b border-alloc-border'
+          ? 'bg-alloc-accent text-white rounded-t-xl'
+          : 'bg-alloc-white border-b border-alloc-muted/20'
         }
       `}
       onClick={onToggle}

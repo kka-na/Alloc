@@ -181,7 +181,7 @@ function BudgetPage({ budgetId }) {
                     className={`w-full text-left rounded-xl px-4 py-3 touch-feedback border ${
                       compareMode === option.value
                         ? 'bg-alloc-accent/10 border-alloc-accent'
-                        : 'bg-alloc-white border-alloc-border'
+                        : 'bg-alloc-white border-alloc-muted/20'
                     }`}
                   >
                     <span className={`font-medium ${compareMode === option.value ? 'text-alloc-accent' : 'text-alloc-text'}`}>
