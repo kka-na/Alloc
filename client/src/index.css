@@ -3,14 +3,14 @@
 @tailwind utilities;
 
 :root {
-  /* Alloc Theme Variables - default values (will be overridden by JS) */
-  --alloc-bg: #fffcf7;
-  --alloc-white: #ffffff;
-  --alloc-text: #2d2d2d;
-  --alloc-accent: #a53e14;
-  --alloc-over: #a53e14;
-  --alloc-safe: #558a86;
-  --alloc-muted: #c4c4c4;
+  /* Alloc Theme Variables - RGB values for Tailwind opacity support */
+  --alloc-bg: 255 252 247;
+  --alloc-white: 255 255 255;
+  --alloc-text: 45 45 45;
+  --alloc-accent: 165 62 20;
+  --alloc-over: 165 62 20;
+  --alloc-safe: 85 138 134;
+  --alloc-muted: 196 196 196;
 
   --sat: env(safe-area-inset-top);
   --sar: env(safe-area-inset-right);

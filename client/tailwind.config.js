@@ -7,15 +7,15 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Alloc Color Palette - CSS Variables for dynamic theming
+        // Alloc Color Palette - CSS Variables with RGB for opacity support
         'alloc': {
-          'bg': 'var(--alloc-bg)',
-          'white': 'var(--alloc-white)',
-          'text': 'var(--alloc-text)',
-          'accent': 'var(--alloc-accent)',
-          'over': 'var(--alloc-over)',
-          'safe': 'var(--alloc-safe)',
-          'muted': 'var(--alloc-muted)',
+          'bg': 'rgb(var(--alloc-bg) / <alpha-value>)',
+          'white': 'rgb(var(--alloc-white) / <alpha-value>)',
+          'text': 'rgb(var(--alloc-text) / <alpha-value>)',
+          'accent': 'rgb(var(--alloc-accent) / <alpha-value>)',
+          'over': 'rgb(var(--alloc-over) / <alpha-value>)',
+          'safe': 'rgb(var(--alloc-safe) / <alpha-value>)',
+          'muted': 'rgb(var(--alloc-muted) / <alpha-value>)',
         },
       },
     },

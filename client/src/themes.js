@@ -1,5 +1,13 @@
 // 9 Color Themes - each with 2 accent colors + gray (c4c4c4)
 // Warm white background, gray as muted, two colors for accent/over/safe
+// Colors stored as RGB values for Tailwind opacity support
+
+// Helper: convert hex to RGB string "r g b"
+function hexToRgb(hex) {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+  if (!result) return '0 0 0'
+  return `${parseInt(result[1], 16)} ${parseInt(result[2], 16)} ${parseInt(result[3], 16)}`
+}
 
 const themes = [
   {
@@ -70,13 +78,14 @@ export function applyRandomTheme() {
   const theme = themes[Math.floor(Math.random() * themes.length)]
 
   const root = document.documentElement
-  root.style.setProperty('--alloc-bg', baseColors.bg)
-  root.style.setProperty('--alloc-white', baseColors.white)
-  root.style.setProperty('--alloc-text', baseColors.text)
-  root.style.setProperty('--alloc-muted', baseColors.muted)
-  root.style.setProperty('--alloc-accent', theme.accent)
-  root.style.setProperty('--alloc-over', theme.over)
-  root.style.setProperty('--alloc-safe', theme.safe)
+  // Set as RGB values for Tailwind opacity support
+  root.style.setProperty('--alloc-bg', hexToRgb(baseColors.bg))
+  root.style.setProperty('--alloc-white', hexToRgb(baseColors.white))
+  root.style.setProperty('--alloc-text', hexToRgb(baseColors.text))
+  root.style.setProperty('--alloc-muted', hexToRgb(baseColors.muted))
+  root.style.setProperty('--alloc-accent', hexToRgb(theme.accent))
+  root.style.setProperty('--alloc-over', hexToRgb(theme.over))
+  root.style.setProperty('--alloc-safe', hexToRgb(theme.safe))
 
   console.log(`Theme applied: ${theme.name}`)
   return theme.name
