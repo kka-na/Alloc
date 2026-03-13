@@ -49,12 +49,15 @@ router.get('/:id', (req, res) => {
   // 항목을 카테고리별로 그룹화
   const itemsByCategory = items.reduce((acc, item) => {
     if (!acc[item.category_id]) acc[item.category_id] = [];
+    const multiplier = item.is_per_person ? (item.person_count || 1) : 1;
     const confirmed = item.confirmed_amount || 0;
     acc[item.category_id].push({
       ...item,
-      avg_amount: (item.min_amount + item.max_amount) / 2,
-      remaining: (item.min_amount + item.max_amount) / 2 - item.paid_amount,
-      delta: (item.min_amount + item.max_amount) / 2 - item.paid_amount,
+      avg_amount: (item.min_amount + item.max_amount) / 2 * multiplier,
+      total_min: item.min_amount * multiplier,
+      total_max: item.max_amount * multiplier,
+      remaining: (item.min_amount + item.max_amount) / 2 * multiplier - item.paid_amount,
+      delta: (item.min_amount + item.max_amount) / 2 * multiplier - item.paid_amount,
       balance: confirmed > 0 ? confirmed - item.paid_amount : 0
     });
     return acc;
@@ -80,8 +83,8 @@ router.get('/:id', (req, res) => {
 
         const totalConfirmed = allItems.reduce((sum, i) => sum + (i.confirmed_amount || 0), 0);
         const summary = {
-          min: allItems.reduce((sum, i) => sum + i.min_amount, 0),
-          max: allItems.reduce((sum, i) => sum + i.max_amount, 0),
+          min: allItems.reduce((sum, i) => sum + (i.total_min || i.min_amount), 0),
+          max: allItems.reduce((sum, i) => sum + (i.total_max || i.max_amount), 0),
           avg: allItems.reduce((sum, i) => sum + i.avg_amount, 0),
           confirmed: totalConfirmed,
           paid: allItems.reduce((sum, i) => sum + i.paid_amount, 0),
@@ -99,12 +102,21 @@ router.get('/:id', (req, res) => {
 
   const tree = buildTree();
 
-  // 전체 요약 계산
+  // 전체 요약 계산 (인원별 항목은 곱셈 적용)
   const totalConfirmed = items.reduce((sum, i) => sum + (i.confirmed_amount || 0), 0);
   const summary = {
-    total_min: items.reduce((sum, i) => sum + i.min_amount, 0),
-    total_max: items.reduce((sum, i) => sum + i.max_amount, 0),
-    total_avg: items.reduce((sum, i) => sum + (i.min_amount + i.max_amount) / 2, 0),
+    total_min: items.reduce((sum, i) => {
+      const multiplier = i.is_per_person ? (i.person_count || 1) : 1;
+      return sum + i.min_amount * multiplier;
+    }, 0),
+    total_max: items.reduce((sum, i) => {
+      const multiplier = i.is_per_person ? (i.person_count || 1) : 1;
+      return sum + i.max_amount * multiplier;
+    }, 0),
+    total_avg: items.reduce((sum, i) => {
+      const multiplier = i.is_per_person ? (i.person_count || 1) : 1;
+      return sum + (i.min_amount + i.max_amount) / 2 * multiplier;
+    }, 0),
     total_confirmed: totalConfirmed,
     total_paid: items.reduce((sum, i) => sum + i.paid_amount, 0),
     total_balance: totalConfirmed - items.reduce((sum, i) => sum + i.paid_amount, 0)

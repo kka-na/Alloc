@@ -7,6 +7,8 @@ function AddItemModal({ categoryId, onClose, onSuccess }) {
     max_amount: '',
     confirmed_amount: '',
     paid_amount: '',
+    is_per_person: false,
+    person_count: '1',
     note: ''
   })
   const [loading, setLoading] = useState(false)
@@ -31,6 +33,8 @@ function AddItemModal({ categoryId, onClose, onSuccess }) {
           max_amount: parseFloat(form.max_amount) || 0,
           confirmed_amount: parseFloat(form.confirmed_amount) || 0,
           paid_amount: parseFloat(form.paid_amount) || 0,
+          is_per_person: form.is_per_person,
+          person_count: parseInt(form.person_count) || 1,
           note: form.note.trim()
         })
       })
@@ -70,9 +74,36 @@ function AddItemModal({ categoryId, onClose, onSuccess }) {
               />
             </div>
 
+            {/* 인원별 체크박스 */}
+            <div className="flex items-center gap-3">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={form.is_per_person}
+                  onChange={(e) => handleChange('is_per_person', e.target.checked)}
+                  className="w-5 h-5 rounded border-alloc-border text-alloc-accent focus:ring-alloc-accent"
+                />
+                <span className="text-sm text-alloc-text">인원별</span>
+              </label>
+              {form.is_per_person && (
+                <div className="flex items-center gap-2">
+                  <input
+                    type="number"
+                    value={form.person_count}
+                    onChange={(e) => handleChange('person_count', e.target.value)}
+                    min="1"
+                    className="w-20 bg-white border border-alloc-border rounded-xl px-3 py-2 text-alloc-text text-center focus:outline-none focus:border-alloc-accent"
+                  />
+                  <span className="text-sm text-alloc-muted">명</span>
+                </div>
+              )}
+            </div>
+
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-sm text-alloc-muted mb-1 block">최소 금액</label>
+                <label className="text-sm text-alloc-muted mb-1 block">
+                  {form.is_per_person ? '1인 최소 금액' : '최소 금액'}
+                </label>
                 <input
                   type="number"
                   value={form.min_amount}
@@ -82,7 +113,9 @@ function AddItemModal({ categoryId, onClose, onSuccess }) {
                 />
               </div>
               <div>
-                <label className="text-sm text-alloc-muted mb-1 block">최대 금액</label>
+                <label className="text-sm text-alloc-muted mb-1 block">
+                  {form.is_per_person ? '1인 최대 금액' : '최대 금액'}
+                </label>
                 <input
                   type="number"
                   value={form.max_amount}

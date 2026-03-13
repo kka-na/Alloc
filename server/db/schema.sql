@@ -27,6 +27,8 @@ CREATE TABLE IF NOT EXISTS items (
   max_amount       REAL DEFAULT 0,
   confirmed_amount REAL DEFAULT 0,
   paid_amount      REAL DEFAULT 0,
+  is_per_person    INTEGER DEFAULT 0,
+  person_count     INTEGER DEFAULT 1,
   note             TEXT,
   sort_order       INTEGER DEFAULT 0,
   updated_at       DATETIME DEFAULT CURRENT_TIMESTAMP

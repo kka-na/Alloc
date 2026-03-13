@@ -23,4 +23,17 @@ try {
   // Column already exists, ignore
 }
 
+// Migration: Add is_per_person and person_count columns
+try {
+  db.exec('ALTER TABLE items ADD COLUMN is_per_person INTEGER DEFAULT 0');
+} catch (e) {
+  // Column already exists, ignore
+}
+
+try {
+  db.exec('ALTER TABLE items ADD COLUMN person_count INTEGER DEFAULT 1');
+} catch (e) {
+  // Column already exists, ignore
+}
+
 export default db;

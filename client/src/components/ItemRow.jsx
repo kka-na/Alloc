@@ -1,13 +1,20 @@
 function ItemRow({ item, depth, isLast, formatNumber, onEdit, compareMode = 'avg' }) {
   const confirmed = item.confirmed_amount || 0
   const isConfirmed = confirmed > 0
+  const isPerPerson = item.is_per_person
+  const personCount = item.person_count || 1
+  const multiplier = isPerPerson ? personCount : 1
+
+  // 인원별 항목은 이미 avg_amount에 곱셈이 적용됨
+  const totalMin = item.total_min || item.min_amount * multiplier
+  const totalMax = item.total_max || item.max_amount * multiplier
 
   const getCompareValue = () => {
     // 확정 금액이 있으면 그걸 기준으로, 없으면 compareMode에 따라
     if (isConfirmed) return confirmed
     switch (compareMode) {
-      case 'min': return item.min_amount
-      case 'max': return item.max_amount
+      case 'min': return totalMin
+      case 'max': return totalMax
       default: return item.avg_amount
     }
   }
@@ -31,6 +38,9 @@ function ItemRow({ item, depth, isLast, formatNumber, onEdit, compareMode = 'avg
           {/* Status Indicator */}
           <span className={`w-2 h-2 rounded-full ${statusColor} flex-shrink-0`} />
           <span className="text-alloc-text font-medium">{item.name}</span>
+          {isPerPerson && (
+            <span className="text-[10px] bg-alloc-muted/20 text-alloc-muted px-1.5 py-0.5 rounded">{personCount}명</span>
+          )}
           {isConfirmed && (
             <span className="text-[10px] bg-alloc-accent/20 text-alloc-accent px-1.5 py-0.5 rounded">확정</span>
           )}
@@ -63,9 +73,12 @@ function ItemRow({ item, depth, isLast, formatNumber, onEdit, compareMode = 'avg
           </div>
         ) : (
           <div className="text-alloc-muted">
-            <span className="number-highlight">{formatNumber(item.min_amount)}</span>
+            <span className="number-highlight">{formatNumber(totalMin)}</span>
             <span className="mx-1">~</span>
-            <span className="number-highlight">{formatNumber(item.max_amount)}</span>
+            <span className="number-highlight">{formatNumber(totalMax)}</span>
+            {isPerPerson && (
+              <span className="text-[10px] ml-1">({formatNumber(item.min_amount)}×{personCount})</span>
+            )}
           </div>
         )}
 
