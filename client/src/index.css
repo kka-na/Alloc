@@ -30,8 +30,8 @@ html {
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
-  background-color: var(--alloc-bg);
-  color: var(--alloc-text);
+  background-color: rgb(var(--alloc-bg));
+  color: rgb(var(--alloc-text));
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: antialiased;
