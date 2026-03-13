@@ -185,7 +185,7 @@ function SortableItem({ item, depth, isLast, formatNumber, onEdit, compareMode, 
   )
 }
 
-function BudgetTable({ categories, currency, onRefresh, onAddItem, onAddSubcategory, compareMode = 'avg' }) {
+function BudgetTable({ categories, currency, onRefresh, onAddItem, onAddSubcategory, onAddCategory, compareMode = 'avg' }) {
   const [expandedCategories, setExpandedCategories] = useState(new Set())
   const [editingItem, setEditingItem] = useState(null)
   const [editingCategory, setEditingCategory] = useState(null)
@@ -365,9 +365,15 @@ function BudgetTable({ categories, currency, onRefresh, onAddItem, onAddSubcateg
   if (!categories || categories.length === 0) {
     return (
       <div className="px-4 py-10 text-center text-alloc-muted">
-        <div className="text-4xl mb-3">📋</div>
-        <p>카테고리가 없습니다</p>
-        <p className="text-sm mt-1">+ 버튼을 눌러 추가하세요</p>
+        <p className="mb-4">카테고리가 없습니다</p>
+        <button
+          onClick={() => onAddCategory && onAddCategory()}
+          className="w-12 h-12 mx-auto flex items-center justify-center text-alloc-muted touch-feedback rounded-full border border-dashed border-alloc-muted/50"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+          </svg>
+        </button>
       </div>
     )
   }
@@ -411,6 +417,19 @@ function BudgetTable({ categories, currency, onRefresh, onAddItem, onAddSubcateg
           })}
         </SortableContext>
       </DndContext>
+
+      {/* Add Category Button */}
+      <button
+        onClick={(e) => {
+          e.stopPropagation()
+          onAddCategory && onAddCategory()
+        }}
+        className="w-full mt-4 py-3 flex items-center justify-center text-alloc-muted touch-feedback rounded-xl border border-dashed border-alloc-muted/30"
+      >
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+        </svg>
+      </button>
 
       {editingItem && (
         <EditItemModal

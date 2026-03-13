@@ -79,13 +79,6 @@ function BudgetPage({ budgetId }) {
         </h2>
         <div className="flex items-center gap-1">
           <button
-            onClick={() => setShowAddCategory(true)}
-            className="w-8 h-8 rounded-full flex items-center justify-center touch-feedback opacity-60"
-            title="카테고리 추가"
-          >
-            <span className="text-base">📁</span>
-          </button>
-          <button
             onClick={() => setShowSettings(true)}
             className="w-8 h-8 rounded-full flex items-center justify-center touch-feedback opacity-60"
             title="설정"
@@ -110,6 +103,7 @@ function BudgetPage({ budgetId }) {
           onRefresh={fetchBudget}
           onAddItem={handleAddItem}
           onAddSubcategory={handleAddSubcategory}
+          onAddCategory={() => setShowAddCategory(true)}
           compareMode={compareMode}
         />
       </div>

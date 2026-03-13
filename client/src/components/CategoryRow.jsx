@@ -20,7 +20,6 @@ function CategoryRow({ category, depth, isExpanded, hasChildren, onToggle, onEdi
   const compareValue = hasConfirmed ? confirmed : budgetBase
   // 초과 여부: 지출 초과 또는 확정금액이 예산 초과
   const isOver = paid > compareValue || (hasConfirmed && confirmed > budgetBase)
-  const statusColor = isOver ? 'bg-alloc-over' : 'bg-alloc-safe'
 
   // 확정 달성률 (확정 금액 / 예산 기준)
   const confirmedRate = hasConfirmed && budgetBase > 0
@@ -55,9 +54,20 @@ function CategoryRow({ category, depth, isExpanded, hasChildren, onToggle, onEdi
           </svg>
         )}
 
-        {/* Status Indicator */}
+        {/* Status Indicator - Arrow */}
         {category.summary && compareValue > 0 && (
-          <span className={`w-2 h-2 rounded-full ${statusColor}`} />
+          <svg
+            className={`w-4 h-4 ${isOver ? 'text-alloc-over' : 'text-alloc-safe'} ${isTopLevel ? 'opacity-90' : ''}`}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            {isOver ? (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 15l7-7 7 7" />
+            ) : (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+            )}
+          </svg>
         )}
 
         {/* Category Name */}

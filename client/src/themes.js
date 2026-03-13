@@ -70,7 +70,7 @@ const themes = [
 const baseColors = {
   bg: '#fffcf7',        // warm white background
   white: '#ffffff',     // card background
-  text: '#2d2d2d',      // charcoal text
+  text: '#000000',      // black text
   muted: '#c4c4c4',     // gray
 }
 

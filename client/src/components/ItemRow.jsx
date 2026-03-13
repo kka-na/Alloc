@@ -23,7 +23,6 @@ function ItemRow({ item, depth, isLast, formatNumber, onEdit, compareMode = 'avg
   const delta = compareValue - item.paid_amount
   const balance = isConfirmed ? confirmed - item.paid_amount : 0
   const isOver = delta < 0
-  const statusColor = isOver ? 'bg-alloc-over' : 'bg-alloc-safe'
 
   const progress = compareValue > 0 ? (item.paid_amount / compareValue) * 100 : 0
 
@@ -35,8 +34,19 @@ function ItemRow({ item, depth, isLast, formatNumber, onEdit, compareMode = 'avg
       {/* 항목명 + 상태 표시 */}
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2">
-          {/* Status Indicator */}
-          <span className={`w-2 h-2 rounded-full ${statusColor} flex-shrink-0`} />
+          {/* Status Indicator - Arrow */}
+          <svg
+            className={`w-4 h-4 flex-shrink-0 ${isOver ? 'text-alloc-over' : 'text-alloc-safe'}`}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            {isOver ? (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 15l7-7 7 7" />
+            ) : (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+            )}
+          </svg>
           <span className="text-alloc-text font-medium">{item.name}</span>
           {isPerPerson && (
             <span className="text-[10px] bg-alloc-muted/20 text-alloc-muted px-1.5 py-0.5 rounded">{personCount}명</span>

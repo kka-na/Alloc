@@ -6,7 +6,7 @@
   /* Alloc Theme Variables - RGB values for Tailwind opacity support */
   --alloc-bg: 255 252 247;
   --alloc-white: 255 255 255;
-  --alloc-text: 45 45 45;
+  --alloc-text: 0 0 0;
   --alloc-accent: 165 62 20;
   --alloc-over: 165 62 20;
   --alloc-safe: 85 138 134;
