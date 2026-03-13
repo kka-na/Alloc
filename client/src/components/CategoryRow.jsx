@@ -2,10 +2,9 @@ function CategoryRow({ category, depth, isExpanded, hasChildren, onToggle, onEdi
   const isTopLevel = depth === 0
   const hasConfirmed = category.summary && category.summary.confirmed > 0
 
-  const getCompareValue = () => {
+  // 예산 기준값 (설정에 따라 min/avg/max)
+  const getBudgetBase = () => {
     if (!category.summary) return 0
-    // 확정 금액이 있으면 그걸 기준으로
-    if (hasConfirmed) return category.summary.confirmed
     switch (compareMode) {
       case 'min': return category.summary.min
       case 'max': return category.summary.max
@@ -13,14 +12,18 @@ function CategoryRow({ category, depth, isExpanded, hasChildren, onToggle, onEdi
     }
   }
 
-  const compareValue = getCompareValue()
+  const budgetBase = getBudgetBase()
+  const confirmed = category.summary?.confirmed || 0
   const paid = category.summary?.paid || 0
+
+  // 지출 비교 기준 (확정 금액 있으면 확정, 없으면 예산 기준)
+  const compareValue = hasConfirmed ? confirmed : budgetBase
   const isOver = paid > compareValue
   const statusColor = isOver ? 'bg-alloc-over' : 'bg-alloc-safe'
 
-  // 달성률 계산 (확정 금액 기준)
-  const achievementRate = hasConfirmed && category.summary.confirmed > 0
-    ? ((paid - category.summary.confirmed) / category.summary.confirmed) * 100
+  // 확정 달성률 (확정 금액 / 예산 기준)
+  const confirmedRate = hasConfirmed && budgetBase > 0
+    ? (confirmed / budgetBase) * 100
     : 0
 
   return (
@@ -67,8 +70,8 @@ function CategoryRow({ category, depth, isExpanded, hasChildren, onToggle, onEdi
         {category.summary && (
           <>
             {!isExpanded && hasConfirmed ? (
-              <div className={`text-sm font-semibold ${isTopLevel ? 'text-white' : achievementRate > 0 ? 'text-alloc-over' : 'text-alloc-safe'}`}>
-                {achievementRate > 0 ? '+' : ''}{achievementRate.toFixed(1)}%
+              <div className={`text-sm font-semibold ${isTopLevel ? 'text-white' : confirmedRate > 100 ? 'text-alloc-over' : 'text-alloc-safe'}`}>
+                {confirmedRate.toFixed(1)}%
               </div>
             ) : (
               <div className={`text-sm ${isTopLevel ? 'text-white/80' : 'text-alloc-muted'}`}>
