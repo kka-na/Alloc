@@ -95,8 +95,11 @@ function EditItemModal({ item, onClose, onSuccess, onDelete, onAddNew }) {
     <div className="fixed inset-0 z-50 flex items-end justify-center" onClick={onClose}>
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
       <div
-        className="relative w-full bg-alloc-bg rounded-t-3xl bottom-sheet max-h-[90vh] overflow-y-auto"
-        style={{ paddingBottom: 'max(24px, env(safe-area-inset-bottom))' }}
+        className="relative w-full bg-alloc-bg rounded-t-3xl bottom-sheet max-h-[70vh] overflow-y-auto"
+        style={{
+          paddingBottom: 'max(24px, env(safe-area-inset-bottom))',
+          marginTop: 'env(safe-area-inset-top)'
+        }}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex justify-center pt-3 pb-2 sticky top-0 bg-alloc-bg">
