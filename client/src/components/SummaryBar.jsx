@@ -18,9 +18,8 @@ function SummaryBar({ summary, currency = 'KRW', compareMode = 'avg' }) {
   const totalConfirmed = summary.total_confirmed || 0
   const totalPaid = summary.total_paid || 0
 
-  // 확정 금액 기준 비교값 (확정 금액 없으면 compareMode로)
-  const getCompareValue = () => {
-    if (totalConfirmed > 0) return totalConfirmed
+  // 예산 기준값 (설정에 따라 min/avg/max)
+  const getBudgetBase = () => {
     switch (compareMode) {
       case 'min': return summary.total_min
       case 'max': return summary.total_max
@@ -28,11 +27,14 @@ function SummaryBar({ summary, currency = 'KRW', compareMode = 'avg' }) {
     }
   }
 
-  const compareValue = getCompareValue()
+  const budgetBase = getBudgetBase()
+
+  // 지출 비교 기준 (확정 금액 있으면 확정, 없으면 예산 기준)
+  const compareValue = totalConfirmed > 0 ? totalConfirmed : budgetBase
 
   // 확정 진행률 (확정 금액 / 예산 기준)
-  const confirmedProgress = summary.total_avg > 0
-    ? (totalConfirmed / summary.total_avg) * 100
+  const confirmedProgress = budgetBase > 0
+    ? (totalConfirmed / budgetBase) * 100
     : 0
 
   // 지출 진행률 (지출 / 확정 금액 기준)
@@ -61,7 +63,7 @@ function SummaryBar({ summary, currency = 'KRW', compareMode = 'avg' }) {
             </button>
           </div>
           <span className="text-sm text-alloc-muted">
-            / {formatFullNumber(summary.total_avg)} 원
+            / {formatFullNumber(budgetBase)} 원
           </span>
         </div>
 
